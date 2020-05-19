@@ -1,14 +1,13 @@
 package demo;
-import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
-
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 import org.testng.Assert;
 
 import files.ReUsableMethods;
 import files.payload;
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 
 public class Basics {
 
@@ -50,6 +49,7 @@ public class Basics {
 		.queryParam("place_id",placeId)
 		.when().get("maps/api/place/get/json")
 		.then().assertThat().log().all().statusCode(200).extract().response().asString();
+	
 	JsonPath js1=ReUsableMethods.rawToJson(getPlaceResponse);
 	String actualAddress =js1.getString("address");
 	System.out.println(actualAddress);
