@@ -35,10 +35,17 @@ public class Basics {
 		String newAddress = "Summer Walk, Africa";
 		
 		given().log().all().queryParam("key", "qaclick123").header("Content-Type","application/json")
-		.body("{\r\n" + 
+		/*
+		  	.body("{\r\n" + 				like this "+varname+", when we already have one " and we type " it actually types 2 "
 				"\"place_id\":\""+placeId+"\",\r\n" + 
 				"\"address\":\""+newAddress+"\",\r\n" + 
 				"\"key\":\"qaclick123\"\r\n" + 
+				"}").
+		 */
+		.body("{\r\n" + 
+				"    \"place_id\": \""+placeId+"\",\r\n" + 
+				"    \"address\": \""+newAddress+"\",\r\n" + 
+				"    \"key\": \"qaclick123\"\r\n" + 
 				"}").
 		when().put("maps/api/place/update/json")
 		.then().assertThat().log().all().statusCode(200).body("msg", equalTo("Address successfully updated"));
