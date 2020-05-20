@@ -2,15 +2,11 @@ package demo;
 
 import static io.restassured.RestAssured.given;
 
-
-
 import java.io.IOException;
 
 import java.nio.file.Files;
 
 import java.nio.file.Paths;
-
-
 
 import org.testng.annotations.Test;
 
@@ -21,58 +17,44 @@ import io.restassured.path.json.JsonPath;
 
 import io.restassured.response.Response;
 
-
-
 public class StaticJson {
 
-@Test
+	@Test
 
-public void addBook() throws IOException
+	public void addBook() throws IOException
 
+	{
 
+		RestAssured.baseURI = "http://216.10.245.166";
 
-{
+		String resp = given().
 
+				header("Content-Type", "application/json").
 
+				body(GenerateStringFromResource("C:\\Users\\rahul\\Documents\\Addbookdetails.json")).
 
-RestAssured.baseURI="http://216.10.245.166";
+				when().
 
-String resp=given().
+				post("/Library/Addbook.php").
 
-header("Content-Type","application/json").
+				then().assertThat().statusCode(200).
 
-body(GenerateStringFromResource("C:\\Users\\rahul\\Documents\\Addbookdetails.json")).
+				extract().response().toString();
 
-when().
+		JsonPath js = ReUsableMethods.rawToJson(resp);
 
-post("/Library/Addbook.php").
+		String id = js.get("ID");
 
-then().assertThat().statusCode(200).
+		System.out.println(id);
 
-extract().response().toString();
+		// deleteBOok
 
-JsonPath js= ReUsableMethods.rawToJson(resp);
+	}
 
-   String id=js.get("ID");
+	public static String GenerateStringFromResource(String path) throws IOException {
 
-   System.out.println(id);
+		return new String(Files.readAllBytes(Paths.get(path)));
 
-   
-
-   //deleteBOok
-
-}
-
-public static String GenerateStringFromResource(String path) throws IOException {
-
-
-
-    return new String(Files.readAllBytes(Paths.get(path)));
-
-
+	}
 
 }
-
-}
-
-
