@@ -17,8 +17,6 @@ public class Basics {
 		// validate if Add Place API is workimg as expected
 		// Add place-> Update Place with New Address -> Get Place to validate if
 		// New address is present in response
-
-		
 		
 		// given - all input details
 		// when - Submit the API -resource,http method
